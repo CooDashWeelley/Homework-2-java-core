@@ -2,13 +2,11 @@ package org.skypro.skyshop.product;
 
 import java.util.Objects;
 
-public class Product {
+public abstract class Product {
     private String title;
-    private int cost;
 
-    public Product(String title, int cost) {
+    public Product(String title) {
         this.title = title;
-        this.cost = cost;
     }
 
     public String getTitle() {
@@ -19,29 +17,24 @@ public class Product {
         this.title = title;
     }
 
-    public int getCost() {
-        return cost;
-    }
+    public abstract int getPrice();
 
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
+    public abstract boolean isSpecial();
 
     @Override
     public String toString() {
-        return "Product: " + title + ", cost: " + cost;
+        return "Product: " + getTitle() + ", price: " + getPrice();
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return cost == product.cost && Objects.equals(title, product.title);
+        return getPrice() == product.getPrice() && Objects.equals(title, product.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, cost);
+        return Objects.hash(getTitle(), getPrice());
     }
 }
