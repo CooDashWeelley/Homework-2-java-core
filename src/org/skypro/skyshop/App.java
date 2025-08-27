@@ -4,6 +4,8 @@ import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 
 public class App {
     public static void main(String[] args) {
@@ -13,8 +15,10 @@ public class App {
         FixPriceProduct vfr = new FixPriceProduct("vfr");
         DiscountedProduct bgt = new DiscountedProduct("bgt", 5, 25);
         SimpleProduct nhy = new SimpleProduct("nhy", 6);
+
         ProductBasket productBasket = new ProductBasket();
         ProductBasket productBasket2 = new ProductBasket();
+
         productBasket2.addProduct(abc);
         productBasket.addProduct(abc);
         productBasket.addProduct(bcd);
@@ -26,11 +30,34 @@ public class App {
         System.out.println(productBasket.amountOfBasket());
         System.out.println(productBasket.findByTitle("abc"));
         System.out.println(productBasket.findByTitle("cba"));
-        productBasket.clearBasket();
+//        productBasket.clearBasket();
         productBasket.getBasket();
         System.out.println(productBasket.amountOfBasket());
         System.out.println(productBasket.findByTitle("abc"));
         productBasket2.getBasket();
 
+        try {
+            DiscountedProduct empty2 = new DiscountedProduct("a", 0, 1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("incorrect data");
+        }
+        try {
+            SimpleProduct empty = new SimpleProduct("", 1);
+        } catch (IllegalArgumentException e) {
+            System.out.println("incorrect data");
+        }
+
+        SearchEngine search = new SearchEngine();
+
+        try {
+            System.out.println(search.findBestMatch("abcabccdecdecde", productBasket));
+        } catch (BestResultNotFound e) {
+            System.out.println("result not found");
+        }
+        try {
+            System.out.println(search.findBestMatch("a", productBasket2));
+        } catch (BestResultNotFound e) {
+            System.out.println("result not found");
+        }
     }
 }

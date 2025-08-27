@@ -8,8 +8,16 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String title, int basePrice, int percentOfDiscount) {
         super(title);
-        this.basePrice = basePrice;
-        this.percentOfDiscount = percentOfDiscount;
+        if (basePrice < 1) {
+            throw new IllegalArgumentException("price less 1");
+        } else {
+            this.basePrice = basePrice;
+        }
+        if (percentOfDiscount <= 0 || percentOfDiscount >= 100) {
+            throw new IllegalArgumentException("percent not in range");
+        } else {
+            this.percentOfDiscount = percentOfDiscount;
+        }
     }
 
 

@@ -28,6 +28,12 @@ public class ProductBasket {
         return sum;
     }
 
+
+    public Product[] getAllBasket() {
+        return this.productBasket;
+    }
+
+
     public void getBasket() {
         int specialProduct = 0;
         if (productCount == 0) {
