@@ -22,13 +22,14 @@ public class ProductBasket {
             if (product == null) {
                 continue;
             } else {
-                sum += product.getCost();
+                sum += product.getPrice();
             }
         }
         return sum;
     }
 
     public void getBasket() {
+        int specialProduct = 0;
         if (productCount == 0) {
             System.out.println("Basket is empty");
         } else {
@@ -38,8 +39,12 @@ public class ProductBasket {
                 } else {
                     System.out.println(product);
                 }
+                if (product.isSpecial()) {
+                    specialProduct++;
+                }
             }
             System.out.println("Amount: " + this.amountOfBasket());
+            System.out.println("Special Product: " + specialProduct);
         }
     }
 
