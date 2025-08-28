@@ -5,10 +5,13 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 import org.skypro.skyshop.search.interfaces.Searchable;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class SearchEngine {
 
     public Searchable findBestMatch(String search, ProductBasket basket) throws BestResultNotFound {
-        Product[] products = basket.getAllBasket();
+        List<Product> products = basket.printBasket();
         int maxCoincidence = 0;
         Searchable searchableProduct = null;
         for (Product product : products) {
@@ -38,5 +41,18 @@ public class SearchEngine {
             index = coincidence + temp.length();
         }
         return count;
+    }
+
+    public List<Searchable> findAllMatch(String search, ProductBasket basket) {
+        List<Searchable> matchList = new LinkedList<>();
+        for (Product product : basket.printBasket()) {
+            if (search.contains(product.getTitle())) {
+                matchList.add(product);
+            }
+        }
+        if(matchList.isEmpty()) {
+            System.out.println("No matches");
+        }
+        return matchList;
     }
 }

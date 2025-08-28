@@ -2,41 +2,38 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.ListIterator;
+
 public class ProductBasket {
-    private final Product[] productBasket = new Product[5];
-    private int productCount = 0;
+    private List<Product> productBasket = new LinkedList<>();
+
+    private int basketSize = 0;
 
 
     public void addProduct(Product product) {
-        if (productCount == 5) {
-            System.out.println("not enough space to add product");
-        } else {
-            productBasket[productCount] = product;
-            productCount++;
-        }
+        productBasket.add(product);
+        basketSize++;
     }
 
     public int amountOfBasket() {
         int sum = 0;
         for (Product product : productBasket) {
-            if (product == null) {
-                continue;
-            } else {
-                sum += product.getPrice();
-            }
+            sum += product.getPrice();
         }
         return sum;
     }
 
 
-    public Product[] getAllBasket() {
+    public List<Product> printBasket() {
         return this.productBasket;
     }
 
 
     public void getBasket() {
         int specialProduct = 0;
-        if (productCount == 0) {
+        if (basketSize == 0) {
             System.out.println("Basket is empty");
         } else {
             for (Product product : productBasket) {
@@ -54,6 +51,7 @@ public class ProductBasket {
         }
     }
 
+
     public boolean findByTitle(String title) {
         for (Product product : productBasket) {
             if (product != null && title.equals(product.getTitle())) {
@@ -63,14 +61,38 @@ public class ProductBasket {
         return false;
     }
 
+
     public void clearBasket() {
-        if (productCount == 0) {
+        if (basketSize == 0) {
             System.out.println("Basket is empty");
         } else {
-            for (int i = productCount; i != 0; i--) {
-                productBasket[i - 1] = null;
+            ListIterator<Product> iter = productBasket.listIterator();
+            while (iter.hasNext()) {
+                iter.next();
+                iter.remove();
             }
-            productCount = 0;
+            basketSize = 0;
         }
     }
+
+
+    public List<Product> removeFromBasketByName(String title) {
+        ListIterator<Product> iter = this.productBasket.listIterator();
+        List<Product> removedProduct = new LinkedList<>();
+        while (iter.hasNext()) {
+            Product prod = iter.next();
+            if (prod.getTitle().equals(title)) {
+                removedProduct.add(prod);
+                iter.remove();
+            }
+        }
+        if (removedProduct.isEmpty()) {
+            System.out.println("Remove list is empty");
+        } else {
+            System.out.print("Remove list: ");
+        }
+        return removedProduct;
+    }
+
+
 }
