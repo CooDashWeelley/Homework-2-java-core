@@ -1,11 +1,17 @@
 package org.skypro.skyshop.product;
 
-public class SimpleProduct extends Product {
+import org.skypro.skyshop.search.interfaces.Searchable;
+
+public class SimpleProduct extends Product  implements Searchable {
     private int price;
 
     public SimpleProduct(String title, int price) {
         super(title);
-        this.price = price;
+        if (price < 1) {
+            throw new IllegalArgumentException("price less 1");
+        } else {
+            this.price = price;
+        }
     }
 
 
