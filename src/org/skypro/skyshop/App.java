@@ -71,5 +71,6 @@ public class App {
         ProductBasket basket1 = new ProductBasket();
         System.out.println(search.findAllMatch("cdecdebgtabc", productBasket));
         System.out.println(search.findAllMatch("", basket1));
+
     }
 }
