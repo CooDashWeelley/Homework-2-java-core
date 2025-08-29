@@ -12,6 +12,7 @@ public class App {
         SimpleProduct abc = new SimpleProduct("abc", 1);
         SimpleProduct abc1 = new SimpleProduct("abc", 2);
         SimpleProduct abc2 = new SimpleProduct("abc", 3);
+        SimpleProduct abc3 = new SimpleProduct("abc", 4);
         DiscountedProduct bcd = new DiscountedProduct("bcd", 2, 50);
         SimpleProduct cde = new SimpleProduct("cde", 3);
         FixPriceProduct vfr = new FixPriceProduct("vfr");
@@ -68,9 +69,18 @@ public class App {
         productBasket2.removeFromBasketByName("d");
         productBasket.getBasket();
 
-        ProductBasket basket1 = new ProductBasket();
-        System.out.println(search.findAllMatch("cdecdebgtabc", productBasket));
-        System.out.println(search.findAllMatch("", basket1));
+        search.addToSearchList(abc);
+        search.addToSearchList(bcd);
+        search.addToSearchList(cde);
+        search.addToSearchList(vfr);
+        search.addToSearchList(bgt);
+        search.addToSearchList(nhy);
+        search.addToSearchList(abc1);
+        search.addToSearchList(abc2);
+        search.addToSearchList(abc3);
+
+        System.out.println(search.findAllMatch("abc"));
+
 
     }
 }
