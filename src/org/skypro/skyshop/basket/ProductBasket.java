@@ -2,32 +2,37 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class ProductBasket {
-    private List<Product> productBasket = new LinkedList<>();
+    private Map<String, List<Product>> productMap = new TreeMap<>();
 
     private int basketSize = 0;
 
 
     public void addProduct(Product product) {
-        productBasket.add(product);
+        if (!productMap.containsKey(product.getTitle())) {
+            List<Product> productList = new ArrayList<>();
+            productMap.put(product.getTitle(), productList);
+        }
+        productMap.get(product.getTitle()).add(product);
         basketSize++;
     }
 
     public int amountOfBasket() {
         int sum = 0;
-        for (Product product : productBasket) {
-            sum += product.getPrice();
+        for (Map.Entry<String, List<Product>> products : productMap.entrySet()) {
+            for (Product product : products.getValue()) {
+                sum += product.getPrice();
+            }
         }
         return sum;
+
     }
 
 
-    public List<Product> printBasket() {
-        return this.productBasket;
+    public Map<String, List<Product>> printBasket() {
+        return this.productMap;
     }
 
 
@@ -36,16 +41,14 @@ public class ProductBasket {
         if (basketSize == 0) {
             System.out.println("Basket is empty");
         } else {
-            for (Product product : productBasket) {
-                if (product == null) {
-                    continue;
-                } else {
-                    System.out.println(product);
-                }
-                if (product.isSpecial()) {
-                    specialProduct++;
+            for (Map.Entry<String, List<Product>> products : productMap.entrySet()) {
+                for (Product product : products.getValue()) {
+                    if (product.isSpecial()) {
+                        specialProduct++;
+                    }
                 }
             }
+            System.out.println(printBasket());
             System.out.println("Amount: " + this.amountOfBasket());
             System.out.println("Special Product: " + specialProduct);
         }
@@ -53,9 +56,11 @@ public class ProductBasket {
 
 
     public boolean findByTitle(String title) {
-        for (Product product : productBasket) {
-            if (product != null && title.equals(product.getTitle())) {
-                return true;
+        for (Map.Entry<String, List<Product>> products : productMap.entrySet()) {
+            for (Product product : products.getValue()) {
+                if (product != null && title.equals(product.getTitle())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -66,25 +71,23 @@ public class ProductBasket {
         if (basketSize == 0) {
             System.out.println("Basket is empty");
         } else {
-            ListIterator<Product> iter = productBasket.listIterator();
-            while (iter.hasNext()) {
-                iter.next();
-                iter.remove();
-            }
+            productMap.clear();
             basketSize = 0;
         }
     }
 
 
     public List<Product> removeFromBasketByName(String title) {
-        ListIterator<Product> iter = this.productBasket.listIterator();
         List<Product> removedProduct = new LinkedList<>();
-        while (iter.hasNext()) {
-            Product prod = iter.next();
-            if (prod.getTitle().equals(title)) {
-                removedProduct.add(prod);
-                iter.remove();
+        if (productMap.containsKey(title)) {
+            ListIterator<Product> iter = productMap.get(title).listIterator();
+            while (iter.hasNext()) {
+                Product prod = iter.next();
+                if (prod.getTitle().equals(title)) {
+                    removedProduct.add(prod);
+                }
             }
+            productMap.remove(title);
         }
         if (removedProduct.isEmpty()) {
             System.out.println("Remove list is empty");

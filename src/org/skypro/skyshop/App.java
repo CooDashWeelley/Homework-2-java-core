@@ -14,10 +14,10 @@ public class App {
         SimpleProduct abc2 = new SimpleProduct("abc", 3);
         SimpleProduct abc3 = new SimpleProduct("abc", 4);
         DiscountedProduct bcd = new DiscountedProduct("bcd", 2, 50);
-        SimpleProduct cde = new SimpleProduct("cde", 3);
-        FixPriceProduct vfr = new FixPriceProduct("vfr");
         DiscountedProduct bgt = new DiscountedProduct("bgt", 5, 25);
+        SimpleProduct cde = new SimpleProduct("cde", 3);
         SimpleProduct nhy = new SimpleProduct("nhy", 6);
+        FixPriceProduct vfr = new FixPriceProduct("vfr");
 
         ProductBasket productBasket = new ProductBasket();
         ProductBasket productBasket2 = new ProductBasket();
@@ -31,6 +31,19 @@ public class App {
         productBasket.addProduct(vfr);
         productBasket.addProduct(bgt);
         productBasket.addProduct(nhy);
+
+        SearchEngine search = new SearchEngine();
+
+        search.addToSearchList(abc);
+        search.addToSearchList(bcd);
+        search.addToSearchList(cde);
+        search.addToSearchList(vfr);
+        search.addToSearchList(bgt);
+        search.addToSearchList(nhy);
+        search.addToSearchList(abc1);
+        search.addToSearchList(abc2);
+        search.addToSearchList(abc3);
+
         productBasket.getBasket();
         System.out.println(productBasket.amountOfBasket());
         System.out.println(productBasket.findByTitle("abc"));
@@ -52,32 +65,22 @@ public class App {
             System.out.println("incorrect data");
         }
 
-        SearchEngine search = new SearchEngine();
 
         try {
-            System.out.println(search.findBestMatch("abcabccdecdecde", productBasket));
+            System.out.println(search.findBestMatch("abcabccdecdecdevfr"));
         } catch (BestResultNotFound e) {
             System.out.println("result not found");
         }
         try {
-            System.out.println(search.findBestMatch("a", productBasket2));
+            System.out.println(search.findBestMatch("a"));
         } catch (BestResultNotFound e) {
             System.out.println("result not found");
         }
-        System.out.println(productBasket.removeFromBasketByName("abc"));
+//        System.out.println(productBasket.removeFromBasketByName("abc"));
         System.out.println(productBasket.printBasket());
         productBasket2.removeFromBasketByName("d");
         productBasket.getBasket();
 
-        search.addToSearchList(abc);
-        search.addToSearchList(bcd);
-        search.addToSearchList(cde);
-        search.addToSearchList(vfr);
-        search.addToSearchList(bgt);
-        search.addToSearchList(nhy);
-        search.addToSearchList(abc1);
-        search.addToSearchList(abc2);
-        search.addToSearchList(abc3);
 
         System.out.println(search.findAllMatch("abc"));
 
