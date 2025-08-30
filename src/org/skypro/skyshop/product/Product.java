@@ -46,6 +46,6 @@ public abstract class Product  implements Searchable {
 
     @Override
     public String getSearchTerm() {
-        return title;
+        return this.title;
     }
 }

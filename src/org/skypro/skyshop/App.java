@@ -10,6 +10,9 @@ import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 public class App {
     public static void main(String[] args) {
         SimpleProduct abc = new SimpleProduct("abc", 1);
+        SimpleProduct abc1 = new SimpleProduct("abc", 2);
+        SimpleProduct abc2 = new SimpleProduct("abc", 3);
+        SimpleProduct abc3 = new SimpleProduct("abc", 4);
         DiscountedProduct bcd = new DiscountedProduct("bcd", 2, 50);
         SimpleProduct cde = new SimpleProduct("cde", 3);
         FixPriceProduct vfr = new FixPriceProduct("vfr");
@@ -21,6 +24,8 @@ public class App {
 
         productBasket2.addProduct(abc);
         productBasket.addProduct(abc);
+        productBasket.addProduct(abc1);
+        productBasket.addProduct(abc2);
         productBasket.addProduct(bcd);
         productBasket.addProduct(cde);
         productBasket.addProduct(vfr);
@@ -59,5 +64,22 @@ public class App {
         } catch (BestResultNotFound e) {
             System.out.println("result not found");
         }
+        System.out.println(productBasket.removeFromBasketByName("abc"));
+        System.out.println(productBasket.printBasket());
+        productBasket2.removeFromBasketByName("d");
+        productBasket.getBasket();
+
+        search.addToSearchList(abc);
+        search.addToSearchList(bcd);
+        search.addToSearchList(cde);
+        search.addToSearchList(vfr);
+        search.addToSearchList(bgt);
+        search.addToSearchList(nhy);
+        search.addToSearchList(abc1);
+        search.addToSearchList(abc2);
+        search.addToSearchList(abc3);
+
+        System.out.println(search.findAllMatch("abc"));
+
     }
 }

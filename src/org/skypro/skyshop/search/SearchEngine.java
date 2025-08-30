@@ -1,17 +1,23 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.basket.ProductBasket;
-import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 import org.skypro.skyshop.search.interfaces.Searchable;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class SearchEngine {
+    private List<Searchable> searchables = new LinkedList<>();
+
+    public void addToSearchList(Searchable item) {
+        searchables.add(item);
+    }
 
     public Searchable findBestMatch(String search, ProductBasket basket) throws BestResultNotFound {
-        Product[] products = basket.getAllBasket();
         int maxCoincidence = 0;
         Searchable searchableProduct = null;
-        for (Product product : products) {
+        for (Searchable product : basket.printBasket()) {
             if (product != null) {
                 int coincidence = countCoincidence(product.getSearchTerm(), search);
                 if (maxCoincidence < coincidence) {
@@ -38,5 +44,18 @@ public class SearchEngine {
             index = coincidence + temp.length();
         }
         return count;
+    }
+
+    public List<Searchable> findAllMatch(String search) {
+        List<Searchable> matchList = new LinkedList<>();
+        for (Searchable product : searchables) {
+            if (product.getSearchTerm().equals(search)) {
+                matchList.add(product);
+            }
+        }
+        if (matchList.isEmpty()) {
+            System.out.println("No matches");
+        }
+        return matchList;
     }
 }
