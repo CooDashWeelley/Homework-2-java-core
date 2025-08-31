@@ -1,11 +1,12 @@
 package org.skypro.skyshop.search;
 
-import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 import org.skypro.skyshop.search.interfaces.Searchable;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
     private List<Searchable> searchables = new LinkedList<>();
@@ -14,37 +15,22 @@ public class SearchEngine {
         searchables.add(item);
     }
 
-    public Searchable findBestMatch(String search, ProductBasket basket) throws BestResultNotFound {
+
+    public Map<String, Searchable> findBestMatch(String search) throws BestResultNotFound {
         int maxCoincidence = 0;
-        Searchable searchableProduct = null;
-        for (Searchable product : basket.printBasket()) {
-            if (product != null) {
-                int coincidence = countCoincidence(product.getSearchTerm(), search);
-                if (maxCoincidence < coincidence) {
-                    maxCoincidence = coincidence;
-                    searchableProduct = product;
-                }
+        Map<String, Searchable> bestMatchMap = new TreeMap<>();
+        for (Searchable product : searchables) {
+            if (product != null && search.contains(product.getSearchTerm())) {
+                bestMatchMap.put(product.getSearchTerm(), product);
+                maxCoincidence++;
             }
         }
         if (maxCoincidence == 0) {
             throw new BestResultNotFound("best result not found");
         }
-        return searchableProduct;
+        return bestMatchMap;
     }
 
-    private int countCoincidence(String temp, String search) {
-        int count = 0;
-        int index = 0;
-        while (true) {
-            int coincidence = search.indexOf(temp, index);
-            if (coincidence == -1) {
-                break;
-            }
-            count++;
-            index = coincidence + temp.length();
-        }
-        return count;
-    }
 
     public List<Searchable> findAllMatch(String search) {
         List<Searchable> matchList = new LinkedList<>();
@@ -58,4 +44,6 @@ public class SearchEngine {
         }
         return matchList;
     }
+
+
 }
