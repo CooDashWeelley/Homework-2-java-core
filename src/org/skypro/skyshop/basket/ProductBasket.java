@@ -5,7 +5,7 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private Map<String, List<Product>> productMap = new TreeMap<>();
+    private Map<String, List<Product>> productMap = new LinkedHashMap<>();
 
     private int basketSize = 0;
 
