@@ -1,6 +1,7 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.product.Article;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.SimpleProduct;
@@ -81,8 +82,22 @@ public class App {
         productBasket2.removeFromBasketByName("d");
         productBasket.getBasket();
 
-
         System.out.println(search.findAllMatch("abc"));
 
+        Article article1 = new Article("article one");
+        Article article2 = new Article("article 2");
+        Article article3 = new Article("article three");
+        Article article4 = new Article("article four");
+        Article article5 = new Article("article five");
+        Article article6 = new Article("article without number");
+
+        search.addToSearchList(article1);
+        search.addToSearchList(article2);
+        search.addToSearchList(article3);
+        search.addToSearchList(article4);
+        search.addToSearchList(article5);
+        search.addToSearchList(article6);
+
+        System.out.println(search.search("ar"));
     }
 }
