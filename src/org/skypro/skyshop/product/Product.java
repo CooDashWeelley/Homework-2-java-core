@@ -4,7 +4,7 @@ import org.skypro.skyshop.search.interfaces.Searchable;
 
 import java.util.Objects;
 
-public abstract class Product  implements Searchable {
+public abstract class Product implements Searchable, Comparable<Searchable> {
     private String title;
 
     public Product(String title) {
@@ -36,16 +36,23 @@ public abstract class Product  implements Searchable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return getPrice() == product.getPrice() && Objects.equals(title, product.title);
+        return Objects.equals(title, product.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getTitle(), getPrice());
+        return Objects.hash(getTitle());
     }
 
     @Override
     public String getSearchTerm() {
         return this.title;
     }
+
+    @Override
+    public int compareTo(Searchable o) {
+        return title.compareTo(o.getSearchTerm());
+    }
+
+
 }

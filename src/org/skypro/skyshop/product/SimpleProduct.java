@@ -1,8 +1,6 @@
 package org.skypro.skyshop.product;
 
-import org.skypro.skyshop.search.interfaces.Searchable;
-
-public class SimpleProduct extends Product  implements Searchable {
+public class SimpleProduct extends Product {
     private int price;
 
     public SimpleProduct(String title, int price) {

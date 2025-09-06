@@ -1,15 +1,13 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.search.comparators.SortComparator;
 import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 import org.skypro.skyshop.search.interfaces.Searchable;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
-    private List<Searchable> searchables = new LinkedList<>();
+    private Set<Searchable> searchables = new HashSet<>();
 
     public void addToSearchList(Searchable item) {
         searchables.add(item);
@@ -45,5 +43,16 @@ public class SearchEngine {
         return matchList;
     }
 
-
+    public Set<Searchable> search(String searchRequest) {
+        Set<Searchable> listOfSearch = new TreeSet<>(new SortComparator());
+        for (Searchable searchable : searchables) {
+            if (searchable.getSearchTerm().contains(searchRequest)) {
+                listOfSearch.add(searchable);
+            }
+        }
+        if (listOfSearch.isEmpty()) {
+            System.out.println("No matches");
+        }
+        return listOfSearch;
+    }
 }
