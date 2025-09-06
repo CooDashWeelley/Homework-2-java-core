@@ -5,6 +5,7 @@ import org.skypro.skyshop.search.exceptions.BestResultNotFound;
 import org.skypro.skyshop.search.interfaces.Searchable;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private Set<Searchable> searchables = new HashSet<>();
@@ -43,13 +44,11 @@ public class SearchEngine {
         return matchList;
     }
 
+
     public Set<Searchable> search(String searchRequest) {
-        Set<Searchable> listOfSearch = new TreeSet<>(new SortComparator());
-        for (Searchable searchable : searchables) {
-            if (searchable.getSearchTerm().contains(searchRequest)) {
-                listOfSearch.add(searchable);
-            }
-        }
+        Set<Searchable> listOfSearch = searchables.stream()
+                .filter(e -> e.getSearchTerm().contains(searchRequest))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new SortComparator())));
         if (listOfSearch.isEmpty()) {
             System.out.println("No matches");
         }

@@ -79,7 +79,7 @@ public class App {
         }
 //        System.out.println(productBasket.removeFromBasketByName("abc"));
         System.out.println(productBasket.printBasket());
-        productBasket2.removeFromBasketByName("d");
+        System.out.println(productBasket2.removeFromBasketByName("d"));
         productBasket.getBasket();
 
         System.out.println(search.findAllMatch("abc"));
